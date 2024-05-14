@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="encording">
+<title>ToDoリスト</title>
+</head>
+<body>
+	<header>
+		ToDoリスト
+	</header>
+	<hr>
+	
+	<main>
+		<h2>ログイン</h2>
+		<form action="/login" method="post">
+			<input type="text" name="name" placeholder="名前">
+			<input typy="text" name="password" placeholder="パスワード">
+			<button>ログイン</button>
+			<br> <span th:text="${messerge}" style="color: red"></span>
+		</form>
+	</main>
+	
+	<hr>
+	<footer>
+		C2班
+	</footer>
+	
+
+</body>
+</html>

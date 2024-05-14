@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ToDoリスト</title>
+</head>
+<body>
+	<header>
+		新規タスク登録
+	</header>
+	<hr>
+	
+	<form action="/tasks/new" method="post">
+		<table border="1">
+			<tr>
+				<th>カテゴリー</th>
+				<td>
+					<input type="checkbox" name="genre" value="work">仕事
+					<input type="checkbox" name="genre" value="personal">個人
+					<input type="checkbox" name="genre" value="others">その他
+				</td>
+			</tr>
+			<tr>
+				<th>タスク名</th>
+				<td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<th>期限</th>
+				<td>
+					<input type="date" name="timelimit">
+				</td>
+			</tr>
+			<tr>
+				<th>進捗状況</th>
+				<td>
+					<input type="checkbox" name="genre" value="notyet">未着手
+					<input type="checkbox" name="genre" value="inprogress">進行中
+					<input type="checkbox" name="genre" value="done">完了
+				</td>
+			</tr>
+			<tr>
+				<th>メモ</th>
+				<td>
+					<textarea name="memo" rows="4" cols="40"></textarea>
+				</td>
+			</tr>
+		</table>
+		<button>登録</button>
+	</form>
+	
+	<hr>
+	<footer>
+		C2班
+	</footer>
+
+</body>
+</html>
