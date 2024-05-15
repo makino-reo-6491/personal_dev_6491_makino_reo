@@ -13,11 +13,23 @@
 	<main>
 		<h2>ログイン</h2>
 		<form action="/login" method="post">
-			<input type="text" name="name" placeholder="名前">
-			<input typy="text" name="password" placeholder="パスワード">
-			<button>ログイン</button>
-			<br> <span th:text="${messerge}" style="color: red"></span>
-		</form>
+		<span th:text="${message}" style="color:red;"></span>
+		<table border="1">
+			<tr>
+				<th>メールアドレス</th>
+				<td>
+					<input type="text" name="email">
+				</td>
+			</tr>
+			<tr>
+				<th>パスワード</th>
+				<td>
+					<input type="text" name="password">
+				</td>
+			</tr>
+		</table>
+		<input type="submit" value="ログイン">
+	</form>
 	</main>
 	
 	<hr>

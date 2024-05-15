@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>ToDoリスト</title>
+<meta charset="encording">
+<title>タスク更新</title>
 </head>
 <body>
-	<header>
-		新規タスク登録
-	</header>
-	<hr>
+	<h1>タスク更新</h1>
 	
-	<form action="/tasks/add" method="post">
+	<form th:action="@{/tasks/{id}/edit(id=${task.id})}" method="post">
 		<table border="1">
 			<tr>
 				<th>カテゴリー</th>
-				<td>
+				<td th:value="${task.categoryId}">
 					<input type="checkbox" name="categoryId" value="1">仕事
 					<input type="checkbox" name="categoryId" value="2">個人
 					<input type="checkbox" name="categoryId" value="3">その他
@@ -22,7 +19,9 @@
 			</tr>
 			<tr>
 				<th>タイトル</th>
-				<td><input type="text" name="title"></td>
+				<td>
+					<input type="text" name="title" th:value="${task.title}">
+				</td>
 			</tr>
 			<tr>
 				<th>期限</th>
@@ -41,17 +40,12 @@
 			<tr>
 				<th>メモ</th>
 				<td>
-					<textarea name="memo" rows="4" cols="40"></textarea>
+					<textarea name="memo" th:value="${task.memo}" rows="4" cols="40"></textarea>
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="登録">
+		<input type="submit" value="更新">
 	</form>
-	
-	<hr>
-	<footer>
-		C2班
-	</footer>
 
 </body>
 </html>

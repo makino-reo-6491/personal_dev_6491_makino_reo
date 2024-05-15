@@ -10,18 +10,50 @@
 	</header>
 	<hr>
 	
+	<nav>
+		<a href="/tasks">タスク一覧</a>
+	</nav>
+		
 	<table border="1">
 		<tr>
-			<th>NO</th>
-			<th>タスク名</th>
-			<th>カテゴリ</th>
+			<th>ID</th>
+			<th>カテゴリーID</th>
+			<th>タイトル</th>
 			<th>期限</th>
 			<th>進捗状況</th>
+			<th>メモ</th>
+			<th>更新</th>
 			<th>削除</th>
+		</tr>
+		<tr th:each="task:${tasks}">
+			<td th:text="${task.id}"></td>
+			<td>
+				<span th:if="${task.categoryId}==1">仕事</span>
+				<span th:if="${task.categoryId}==2">個人</span>
+				<span th:if="${task.categoryId}==3">その他</span>
+			</td>
+			<td th:text="${task.title}"></td>
+			<td th:text="${task.closingDate}"></td>
+			<td>
+				<span th:if="${task.progress}==0">未着手</span>
+				<span th:if="${task.progress}==1">進行中</span>
+				<span th:if="${task.progress}==2">完了</span>
+			</td>
+			<td th:text="${task.memo}"></td>
+			<td>
+				<form th:action="@{/tasks/{id}/edit(id=${task.id})}" method="get">
+					<input type="submit" value="更新">
+				</form>
+			</td>
+			<td>
+				<form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post">
+					<input type="submit" value="削除">
+				</form>
+			</td>
 		</tr>
 	</table>
 	<br>
-	<a href="/tasks/new">新規タスク作成</a>
+	<a href="/tasks/add">新規タスク追加</a>
 	<hr>
 	<footer>
 		C2班
