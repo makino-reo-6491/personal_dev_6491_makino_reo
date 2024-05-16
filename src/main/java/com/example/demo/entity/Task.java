@@ -16,6 +16,30 @@ import jakarta.persistence.Table;
 @Table(name = "tasks")
 public class Task implements Serializable {
 
+	// フィールド
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; // 主キー
+
+	@Column(name = "category_id")
+	private Integer categoryId;
+
+	@Column(name = "user_id")
+	private Integer userId;
+
+	private String title;
+
+	@Column(name = "closing_date")
+	private LocalDate closingDate;
+
+	private Integer progress;
+
+	private String memo;
+
+	@ManyToOne // itemは多、結合するcategoryは1
+	@JoinColumn(name = "category_id", insertable = false, updatable = false) // 結合に使いたい列名＝外部キーの列名を書く、テーブルに操作を行うときにこのテーブルは関係ありません
+	private Category category; // 結合したいテーブルのインスタンスを生成
+
 	// コンストラクタ
 	public Task() {
 
@@ -38,38 +62,6 @@ public class Task implements Serializable {
 		this.closingDate = closingDate;
 		this.progress = progress;
 		this.memo = memo;
-	}
-
-	// フィールド
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; // 主キー
-
-	@Column(name = "category_id")
-	private Integer categoryId;
-
-	@Column(name = "user_id")
-	private Integer userId;
-
-	private String title;
-
-	@Column(name = "closing_date")
-	private LocalDate closingDate;
-
-	private Integer progress;
-
-	private String memo;
-
-	@ManyToOne
-	@JoinColumn(name = "category_id", insertable = false, updatable = false)
-	private Category category;
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 	// ゲッター
@@ -99,6 +91,14 @@ public class Task implements Serializable {
 
 	public String getMemo() {
 		return memo;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

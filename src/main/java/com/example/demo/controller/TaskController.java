@@ -40,6 +40,7 @@ public class TaskController {
 		if (categoryId == null) {
 			taskList = taskRepository.findAll();
 		} else {
+			// tasksテーブルをカテゴリーIDを指定して一覧を取得
 			taskList = taskRepository.findByCategoryId(categoryId);
 		}
 		model.addAttribute("tasks", taskList);
@@ -71,6 +72,30 @@ public class TaskController {
 
 		// 「/tasks」にGETでリクエストし直す
 		return "redirect:/tasks";
+	}
+
+	// 更新/削除ボタン表示
+	@GetMapping("/tasks/edit")
+	public String detail(
+			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
+			Model model) {
+
+		// 全カテゴリー一覧を取得
+		List<Category> categoryList = categoryRepository.findAll();
+		model.addAttribute("categories", categoryList);
+
+		// タスク一覧情報の取得
+		List<Task> taskList = null;
+		if (categoryId == null) {
+			taskList = taskRepository.findAll();
+		} else {
+			// tasksテーブルをカテゴリーIDを指定して一覧を取得
+			taskList = taskRepository.findByCategoryId(categoryId);
+		}
+		model.addAttribute("tasks", taskList);
+
+		// tasks.htmlを出力
+		return "tasksDetail";
 	}
 
 	// 更新画面表示

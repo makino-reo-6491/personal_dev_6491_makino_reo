@@ -3,18 +3,27 @@
 <head>
 <meta charset="encording">
 <title>タスク更新</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<h1>タスク更新</h1>
+	<header th:replace="header"></header>
 	
+	<h2>タスク更新</h2>
 	<form th:action="@{/tasks/{id}/edit(id=${task.id})}" method="post">
 		<table border="1">
 			<tr>
 				<th>カテゴリー</th>
-				<td th:value="${task.categoryId}">
-					<input type="checkbox" name="categoryId" value="1">仕事
-					<input type="checkbox" name="categoryId" value="2">個人
-					<input type="checkbox" name="categoryId" value="3">その他
+				<td>
+					<div>
+				      <input type="radio" name="categoryId" value="1" />
+				      <label for="categoryChoice1">仕事</label>
+				
+				      <input type="radio" name="categoryId" value="2" />
+				      <label for="categoryChoice2">個人</label>
+				
+				      <input type="radio" name="categoryId" value="3" />
+				      <label for="categoryChoice3">その他</label>
+				    </div>
 				</td>
 			</tr>
 			<tr>
@@ -32,9 +41,16 @@
 			<tr>
 				<th>進捗状況</th>
 				<td>
-					<input type="checkbox" name="progress" value="0">未着手
-					<input type="checkbox" name="progress" value="1">進行中
-					<input type="checkbox" name="progress" value="2">完了
+					<div>
+				      <input type="radio" name="progress" value="0" />
+				      <label for="progressChoice1">未着手</label>
+				
+				      <input type="radio" name="progress" value="1" />
+				      <label for="progressChoice2">進行中</label>
+				
+				      <input type="radio" name="progress" value="2" />
+				      <label for="progressChoice3">完了</label>
+				    </div>
 				</td>
 			</tr>
 			<tr>
@@ -44,8 +60,10 @@
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="更新">
+		<button type="submit">更新</button>
 	</form>
+	<hr>
+	<footer th:replace="footer"></footer>
 
 </body>
 </html>

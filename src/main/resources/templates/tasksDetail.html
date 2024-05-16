@@ -10,12 +10,11 @@
 	<hr>
 	
 	<nav>
-		<a href="/tasks">タスク一覧</a>
+		<a href="/tasks">全タスク</a>
 		<a th:each="c:${categories}" th:href="@{/tasks(categoryId=${c.id})}">
 			<span th:text="${c.name}" style="padding-left: 10px;"></span>
 		</a>
 	</nav>
-	<br>
 		<table border="1">
 		<tr>
 			<th>ID</th>
@@ -24,6 +23,8 @@
 			<th>期限</th>
 			<th>進捗状況</th>
 			<th>メモ</th>
+			<th>更新</th>
+			<th>削除</th>
 		</tr>
 		<tr th:each="task:${tasks}">
 			<td th:text="${task.id}"></td>
@@ -40,11 +41,18 @@
 				<span th:if="${task.progress}==2">完了</span>
 			</td>
 			<td th:text="${task.memo}"></td>
+			<td>
+				<form th:action="@{/tasks/{id}/edit(id=${task.id})}" method="get">
+					<button type="submit">更新</button>
+				</form>
+			</td>
+			<td>
+				<form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post">
+					<button type="submit">削除</button>
+				</form>
+			</td>
 		</tr>
 	</table>
-	<br>
-	<a href="/tasks/add">新規タスク追加</a>
-	<a href="/tasks/edit">編集</a>
 	<hr>
 	<footer th:replace="footer"></footer>
 

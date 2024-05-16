@@ -10,6 +10,15 @@ public class Account {
 	// アカウント名
 	private String name;
 
+	// フィールド
+	public Account() {
+
+	}
+
+	public Account(String name) {
+		this.name = name;
+	}
+
 	// ゲッター、セッター
 	public String getName() {
 		return name;
