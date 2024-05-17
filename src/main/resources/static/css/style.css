@@ -1,8 +1,12 @@
 /* 全体 */
 body {
-	background-color: #EFF0F7; /* 背景色  */
+	background-color: rgb(128, 128, 128); /* 背景色  */
 	text-align: center; /* 中央寄せ */
     min-width: 900px; /* 最小幅 */
+/*    background-image: url("main.png");*/
+/*    background-repeat: no-repeat;*/
+  	background-size: cover;
+    
 }
 /* ヘッダー、ナビゲーションメニュー、フッター */
 header, nav, footer {
@@ -11,6 +15,23 @@ header, nav, footer {
 	padding-top: 5px; /* 内側余白(上) */
 	padding-bottom: 5px; /* 内側余白(下) */
 }
+
+.wrapper{
+    min-height: 100vh;
+    position: relative;/*←相対位置*/
+    padding-bottom: 120px;/*←footerの高さ*/
+    box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+}
+
+footer{
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+
+ 	position: absolute;/*←絶対位置*/
+    bottom: 0; /*下に固定*/
+}
+
 /* ヘッダー、ナビゲーション内リンク */
 header a, nav a {
 	color: #ffffff;
@@ -39,11 +60,12 @@ table, th, td {
 table {
     margin: 5px auto;
     min-width: 800px;
+    background-color: rgb(255, 255, 255);
 }
 /* 表見出しセル */
 table th {
 	background: rgb(0, 0, 0);
-	color: #ffffff;
+	color: rgb(255, 255, 255);
 }
 /* 送信ボタン */
 button {
@@ -69,16 +91,17 @@ button:hover {
   width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #ffffff;
+  background: transparent;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"] {
   width: 93%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -97,6 +120,62 @@ textarea {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+/*labelタグ*/
+.date-edit {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 36px;
+  border: 2px solid #ccc;
+  border-radius: 15px;
+}
+
+input[type="date"] {
+  position: relative;
+  padding: 0 10px;
+  width: 200px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #999;
+}
+
+.date-edit::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: -43px;
+  width: 36px;
+  height: 36px;
+  background-color: #06c;
+  background-image: url("icon_calendar.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+}
+
+input[type="date"]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+}
+
+input[type="date"]::-webkit-clear-button{
+  -webkit-appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
 }
 
 button[type="submit"] {
@@ -136,12 +215,12 @@ button[type="submit"]:hover {
     }
     .modal-header {
         padding: 2px 16px;
-        background-color: #5cb85c;
+        background-color: rgb(0, 0, 64);
         color: white;
     }
     .modal-footer {
         padding: 10px 16px;
-        background-color: #5cb85c;
+        background-color: rgb(0, 0, 64);
         color: white;
         text-align: right;
     }

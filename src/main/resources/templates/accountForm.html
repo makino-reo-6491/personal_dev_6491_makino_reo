@@ -7,17 +7,17 @@
 </head>
 <body>
 	<header>
-		<h1>ToDoリスト</h1>
+		<h2>ToDoリスト</h2>
 	</header>
+	<hr>
 	
-	<main>
+<!--	<main>-->
+	<div class="wrapper">
 		<div class="container">
-		<h3>ユーザー新規登録</h3>
+		<h2 class="fsize">ユーザー新規登録</h2>
 		<form action="/users/add" method="post">
 			
-			<ul th:if="${errorList}" class="error">
-				<li th:each="error:${errorList}" th:text="${error}" style="color:red;"></li>
-			</ul>
+			<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
 			
 			<input type="text" name="name" placeholder="名前">
 					<br>
@@ -28,11 +28,11 @@
 			<!-- input type="text" name="password" value="パスワード（確認用）">
 					<br -->
 								
-			<button type="submit">ログイン</button>
+			<button type="submit">新規作成</button>
 		</form>
 		</div>
-	</main>
-	<hr>
+<!--	</main>-->
 	<footer th:replace="footer"></footer>
+	</div>
 </body>
 </html>

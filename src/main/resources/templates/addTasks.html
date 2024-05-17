@@ -9,14 +9,19 @@
 	<header th:replace="header"></header>
 	<hr>
 	
+	<div class="wrapper">
 	<h3>新規タスク登録</h3>
+<!--		<ul th:if="${errorList}" class="error">-->
+<!--			<li th:each="error:${errorList}" th:text="${error}" style="color:red;"></li>-->
+<!--		</ul>-->
+		<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
 	<form action="/tasks/add" method="post">
 		<table border="1">
 			<tr>
 				<th>カテゴリー</th>
 				<td>
 					<div>
-				      <input type="radio" name="categoryId" value="1" />
+				      <input type="radio" name="categoryId" value="1" required />
 				      <label for="categoryChoice1">仕事</label>
 				
 				      <input type="radio" name="categoryId" value="2" />
@@ -34,14 +39,16 @@
 			<tr>
 				<th>期限</th>
 				<td>
-					<input type="date" name="closingDate">
+					<label class="date-edit">
+					<input type="date" name="closingDate" required>
+					</label>
 				</td>
 			</tr>
 			<tr>
 				<th>進捗状況</th>
 				<td>
 					<div>
-				      <input type="radio" name="progress" value="0" />
+				      <input type="radio" name="progress" value="0" required />
 				      <label for="progressChoice1">未着手</label>
 				
 				      <input type="radio" name="progress" value="1" />
@@ -59,11 +66,10 @@
 				</td>
 			</tr>
 		</table>
-		<button type="submit">登録</button>
+		<button type="submit">新規作成</button>
 	</form>
-	
-	<hr>
 	<footer th:replace="footer"></footer>
+	</div>
 
 </body>
 </html>

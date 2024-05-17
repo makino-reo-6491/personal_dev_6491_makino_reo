@@ -50,9 +50,20 @@ public class UserController {
 			@RequestParam("password") String password,
 			Model model) {
 
-		// 名前が空の場合にエラーとする
-		if (email.length() == 0 || password.length() == 0) {
-			model.addAttribute("message", "メールアドレスとパスワードを入力してください");
+		// エラーチェック
+		List<String> errorList = new ArrayList<>();
+		if (email.length() == 0) {
+			errorList.add("メールアドレスは必須です");
+		}
+		if (password.length() == 0) {
+			errorList.add("パスワードは必須です");
+		}
+
+		// エラー発生時はログイン画面に戻す
+		if (errorList.size() > 0) {
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("email", email);
+			model.addAttribute("password", password);
 			return "login";
 		}
 
@@ -62,17 +73,19 @@ public class UserController {
 			model.addAttribute("message", "メールアドレスとパスワードが一致しませんでした");
 			return "login";
 		}
-		User customer = userList.get(0);
+		//		User user = userList.get(0);
+		User user = new User(email, password);
+		userRepository.save(user);
 
 		// セッション管理されたアカウント情報にIDと名前をセット
 		//		account.setId(customer.getId());
-		account.setName(customer.getName());
+		account.setName(user.getName());
 
-		// 「/items」へのリダイレクト
+		//	「/tasks」にGETでリクエストし直す
 		return "redirect:/tasks";
 	}
 
-	// 会員登録画面の表示
+	// ユーザー登録フォームを表示する
 	@GetMapping("/users/new")
 	public String create() {
 		return "accountForm";

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="encording">
+<meta charset="UTF-8">
 <title>ToDoリスト</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -11,28 +11,32 @@
 	</header>
 	<hr>
 	
-	<main>
+<!--	<main>-->
+	<div class="wrapper">
 		<div class="container">
 		<h2 class="fsize">ログイン</h2>
 		<form action="/login" method="post">
-			<input type="text" name="email" placeholder="メールアドレス">
+			<input type="email" name="email" placeholder="メールアドレス">
 			<br>
-			<input type="text" name="password" placeholder="パスワード">
+			<input type="password" name="password" placeholder="パスワード">
 			<br>
-<!--			<th:block th:each="error:${errorList}">-->
-			<span th:text="${message}" style="color:red;"></span>
-<!--			</th:block>-->
+				<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
+				<span th:text="${message}" style="color:red;"></span>
 			<br>
 			<br>
 			<a href="/users/new">ユーザー新規作成</a>
 			<button type="submit">ログイン</button>
 		</form>	
+<!--		<form action="/users/new" method="post">-->
+<!--			<button type="submit">ユーザー新規登録</button>-->
+<!--		</form>-->
 		</div>
-		
-	</main>
 	
-	<hr>
+		
+<!--	</main>-->
+	
 	<footer th:replace="footer"></footer>	
+	</div>
 
 </body>
 </html>

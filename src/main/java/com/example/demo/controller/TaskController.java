@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,23 @@ public class TaskController {
 			@RequestParam(name = "progress", defaultValue = "") Integer progress,
 			@RequestParam(name = "memo", defaultValue = "") String memo,
 			Model model) {
+
+		// エラーチェック
+		List<String> errorList = new ArrayList<>();
+		if (title.length() == 0) {
+			errorList.add("タスク名は必須です");
+		}
+		if (memo.length() == 0) {
+			errorList.add("内容を入力してください");
+		}
+
+		// エラー発生時は新規登録フォームに戻す
+		if (errorList.size() > 0) {
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("title", title);
+			model.addAttribute("memo", memo);
+			return "addtasks";
+		}
 
 		Task task = new Task(categoryId, title, closingDate, progress, memo);
 		taskRepository.save(task);

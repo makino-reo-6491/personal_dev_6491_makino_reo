@@ -9,14 +9,14 @@
 	<header th:replace="header"></header>
 	<hr>
 	
+	<div class="wrapper">
 	<nav>
-		<a href="/tasks">タスク一覧</a>
+		<a href="/tasks">全タスク</a>
 		<a th:each="c:${categories}" th:href="@{/tasks(categoryId=${c.id})}">
 			<span th:text="${c.name}" style="padding-left: 10px;"></span>
 		</a>
 	</nav>
 	<br>
-	
 		<table border="1">
 		<tr>
 			<th>ID</th>
@@ -46,8 +46,8 @@
 	<br>
 	<a href="/tasks/add">新規タスク追加</a>
 	<a href="/tasks/edit">編集</a>
-	<hr>
 	<footer th:replace="footer"></footer>
+	</div>
 
 </body>
 </html>

@@ -8,6 +8,7 @@
 <body>
 	<header th:replace="header"></header>
 	
+	<div class="wrapper">
 	<h2>タスク更新</h2>
 	<form th:action="@{/tasks/{id}/edit(id=${task.id})}" method="post">
 		<table border="1">
@@ -62,8 +63,8 @@
 		</table>
 		<button type="submit">更新</button>
 	</form>
-	<hr>
 	<footer th:replace="footer"></footer>
+	<div class="wrapper">
 
 </body>
 </html>
