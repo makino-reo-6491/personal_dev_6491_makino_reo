@@ -14,7 +14,7 @@
 
     <header>
         <h1><a href="/tasks">ToDoリスト</a></h1>
-        <span th:text="'こんにちは！ '+${@account.name}+' さん！'"></span>
+        <span text-align: right th:text="'こんにちは！ '+${@account.name}+' さん！'"></span>
         <a href="#" id="logoutButton">ログアウト</a>
     </header>
 
@@ -29,7 +29,7 @@
                 <p>本当にログアウトしますか？</p>
             </div>
             <div class="modal-footer">
-                <button id="confirmLogout">ログアウト</button>
+                <button id="confirmLogout" color="black">ログアウト</button>
                 <button id="cancelLogout">キャンセル</button>
             </div>
         </div>

@@ -11,9 +11,6 @@
 	
 	<div class="wrapper">
 	<h3>新規タスク登録</h3>
-<!--		<ul th:if="${errorList}" class="error">-->
-<!--			<li th:each="error:${errorList}" th:text="${error}" style="color:red;"></li>-->
-<!--		</ul>-->
 		<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
 	<form action="/tasks/add" method="post">
 		<table border="1">

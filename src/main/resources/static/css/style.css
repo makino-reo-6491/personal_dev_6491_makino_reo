@@ -91,7 +91,7 @@ button:hover {
   width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background: transparent;
+  background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -215,14 +215,14 @@ button[type="submit"]:hover {
     }
     .modal-header {
         padding: 2px 16px;
-        background-color: rgb(0, 0, 64);
+        background-color: rgb(0, 0, 0);
         color: white;
     }
     .modal-footer {
         padding: 10px 16px;
-        background-color: rgb(0, 0, 64);
+        background-color: rgb(0, 0, 0);
         color: white;
-        text-align: right;
+        text-align: center;
     }
     .close {
         color: white;
@@ -232,10 +232,86 @@ button[type="submit"]:hover {
     }
     .close:hover,
     .close:focus {
-        color: #000;
+        color: rgb(128, 128, 128);
         text-decoration: none;
         cursor: pointer;
     }
+    
+        table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #cccccc;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    td:hover {
+        background-color: #f9f9f9;
+    }
+    
+    .calendar-wrap {		
+  margin: 0 auto;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+@media (max-width: 767.98px) {}
+  .calendar-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+.calendar th,
+.calendar td {
+  border: 1px solid #000;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.calendar th {
+  padding: 6px 10px;
+}
+@media (max-width: 767.98px) {}
+  .calendar th,
+  .calendar td {
+    padding: 6px;
+    font-size: 12px;
+  }
+  .calendar th {
+    padding: 3px 6px;
+  }
+
+.calendar .sun {
+  color: #e17f7e;
+  background-color: #f8e4e2;
+}
+.calendar .sat {
+  color: #7ab6f3;
+  background-color: #e7f6fd;
+}
+.calendar .mute {
+  color: #aaa;
+}
+.calendar .today {
+  background-color: #7d7d7d;
+}
+.calendar .off {
+  background-color: #fadcdb;
+}
+.calender .on {
+	background-color: #7ab6f3;
+}
 
 /*span {*/
 /*	background-color: #e5857b;*/
