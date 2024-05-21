@@ -30,21 +30,29 @@ public class TaskController {
 	@GetMapping("/tasks")
 	public String index(
 			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
+			@RequestParam(value = "sort", defaultValue = "") String sort,
 			Model model) {
+
+		List<Task> taskList = taskRepository.findAll();
+		model.addAttribute("tasks", taskList);
 
 		// 全カテゴリー一覧を取得
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
 		// タスク一覧情報の取得
-		List<Task> taskList = null;
-		if (categoryId == null) {
-			taskList = taskRepository.findAll();
+		List<Task> TaskList = null;
+		if (categoryId != null) {
+			TaskList = taskRepository.findByCategoryId(categoryId);
+		} else if (sort.equals("ASC")) {
+			TaskList = taskRepository.findByOrderByClosingDateAsc();
 		} else {
+			TaskList = taskRepository.findAll();
 			// tasksテーブルをカテゴリーIDを指定して一覧を取得
-			taskList = taskRepository.findByCategoryId(categoryId);
+
+			//			taskList = taskRepository.findByOrderByClosingDateAsc(closingDate);
 		}
-		model.addAttribute("tasks", taskList);
+		model.addAttribute("tasks", TaskList);
 
 		// tasks.htmlを出力
 		return "tasks";

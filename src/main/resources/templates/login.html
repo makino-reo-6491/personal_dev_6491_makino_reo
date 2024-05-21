@@ -7,11 +7,10 @@
 </head>
 <body>
 	<header>
-		<h2>ToDoリスト</h2>
+		<h1 text align="left">ToDoリスト</h1>
 	</header>
 	<hr>
 	
-<!--	<main>-->
 	<div class="wrapper">
 		<div class="container">
 		<h2 class="fsize">ログイン</h2>
@@ -24,16 +23,15 @@
 				<span th:text="${message}" style="color:red;"></span>
 			<br>
 			<br>
-<!--			<a href="/users/new">ユーザー新規作成</a>-->
 			<button type="submit">ログイン</button>
 		</form>	
 		<form action="/users/new" method="get">
 			<button type="submit">ユーザー新規登録</button>
 		</form>
+		<form action="/users" method="get">
+			<button type="submit">ユーザー情報一覧</button>
+		</form>
 		</div>
-	
-		
-<!--	</main>-->
 	
 	<footer th:replace="footer"></footer>	
 	</div>

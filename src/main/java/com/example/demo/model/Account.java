@@ -8,6 +8,9 @@ import org.springframework.web.context.annotation.SessionScope;
 public class Account {
 
 	// アカウント名
+
+	private Integer id;
+
 	private String name;
 
 	// フィールド
@@ -15,11 +18,20 @@ public class Account {
 
 	}
 
-	public Account(String name) {
+	public Account(Integer id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 
 	// ゲッター、セッター
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ユーザー情報更新</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1 text align="left">ToDoリスト</h1>
+	</header>
+	<hr>
+	
+	<div class="wrapper">
+		<h2>ユーザー情報更新</h2>
+		<form th:action="@{/users/{id}/edit(id=${user.id})}" method="post">
+			<input type="text" name="name" placeholder="名前" th:value="${user.name}">
+					<br>
+			<input type="email" name="email" placeholder="メールアドレス" th:value="${user.email}">
+					<br>
+			<input type="password" name="password" placeholder="パスワード">
+					<br>
+			<input type="password" name="password2" placeholder="パスワード（確認用）">
+			
+			<button type="submit">更新</button>
+		</form>
+	</div>
+
+</body>
+</html>

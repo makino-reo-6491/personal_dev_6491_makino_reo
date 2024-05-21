@@ -11,11 +11,18 @@
 	
 	<div class="wrapper">
 	<nav>
-		<a href="/tasks">全タスク</a>
+		<a href="/tasks" class="categoriesLink">全タスク</a>
 		<a th:each="c:${categories}" th:href="@{/tasks(categoryId=${c.id})}">
-			<span th:text="${c.name}" style="padding-left: 10px;"></span>
+			<span class="categoriesLink" th:text="${c.name}" style="padding-left: 10px;"></span>
 		</a>
+		<br>
 	</nav>
+		<br>
+			<a href="/tasks/add" class="categoriesLink">新規タスク追加</a>
+		<br>
+	
+	
+	
 		<table border="1">
 		<tr>
 			<th>ID</th>
@@ -48,12 +55,37 @@
 				</form>
 			</td>
 			<td>
-				<form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post">
-					<button type="submit">削除</button>
-				</form>
+<!--				<form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post">-->
+<!--					<button type="submit">削除</button>-->
+<!--				</form>-->
+<!--			</td>-->
+<!--		</tr>-->
+<!--	</table>-->
+				<button type="submit" class="modalOpen" th:attr="data-taskid=${task.id}">削除</button>
+				<div class="modal" th:id="'modal-'+${task.id}">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modalClose">×</span>
+							<h2>確認</h2>
+						</div>
+						<div class="modal-body">
+							<p>本当に削除しますか？</p>
+						</div>
+						<div class="modal-footer" display="inline-block">
+							<form th:action="@{/tasks/{taskId}/delete(taskId=${task.id})}" method="post">
+								<button>削除</button>
+							</form>
+							<form th:action="@{/tasks/edit}" method="get">
+								<button>キャンセル</button>
+							</form>
+						</div>
+					</div>
+				</div>
 			</td>
 		</tr>
 	</table>
+	
+<!--カレンダー表示-->
 		<div id="calendar" class="calendar-wrap"></div>
 	<script>
 		const date = new Date();
@@ -100,9 +132,13 @@
 		                if (dayCount === today && month === currentMonth) {
 		                    calendarHTML += `<td class="today">${dayCount}</td>`;
 		                } 
+		                // 土曜日にclassを付ける
+		                else if (j === 6) {
+		                    calendarHTML += `<td class="sat">${dayCount}</td>`;
+		                }
 		                // 日曜日にclassを付ける
 		                else if (j === 0) {
-		                    calendarHTML += `<td class="off">${dayCount}</td>`;
+		                    calendarHTML += `<td class="sun">${dayCount}</td>`;
 		                } else {
 		                    calendarHTML += `<td>${dayCount}</td>`;
 		                }
@@ -125,10 +161,37 @@
 		document.getElementById('calendar').innerHTML = createCalendar(currentMonth);
 		//  来月分を表示したい場合は"+ createCalendar(currentMonth + 1)"を後ろに加える
 	</script>
-	
 
+</body>
+
+<script>
+	// 各削除ボタンをクリックしたときにモーダルを表示する
+	document.querySelectorAll('.modalOpen').forEach(function (button) {
+		button.addEventListener('click', function () {
+			var taskId = button.getAttribute('data-taskid');
+			var modal = document.getElementById('modal-' + taskId);
+			modal.style.display = 'block';
+		});
+	});
+
+	// モーダルの閉じるボタンをクリックしたときにモーダルを閉じる
+	document.querySelectorAll('.modalClose').forEach(function (closeButton) {
+		closeButton.addEventListener('click', function () {
+			var modal = closeButton.closest('.modal');
+			modal.style.display = 'none';
+		});
+	});
+
+	// モーダルの外側をクリックしたときにモーダルを閉じる
+	window.addEventListener('click', function (event) {
+		document.querySelectorAll('.modal').forEach(function (modal) {
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
+		});
+	});
+</script>
 	<footer th:replace="footer"></footer>
 	</div>
 
-</body>
 </html>

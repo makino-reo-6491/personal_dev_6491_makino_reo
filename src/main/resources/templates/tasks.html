@@ -11,10 +11,12 @@
 	
 	<div class="wrapper">
 	<nav>
-		<a href="/tasks">全タスク</a>
+		<a href="/tasks" class="categoriesLink">全タスク</a>
 		<a th:each="c:${categories}" th:href="@{/tasks(categoryId=${c.id})}">
-			<span th:text="${c.name}" style="padding-left: 10px;"></span>
+			<span class="categoriesLink" text-align="left" th:text="${c.name}" style="padding-left: 10px;"></span>
 		</a>
+<!--		<a href="@{tasks(sort=''ASC)}"><li class="menu">締め切り順</li></a>-->
+		<br>
 	</nav>
 
 	<br>
@@ -45,104 +47,81 @@
 		</tr>
 	</table>
 	
-	<button id="prev" type="button">前の月</button>
-	<button id="next" type="button">次の月</button>
-	<div id="calendar"></div>
+<!--カレンダー表示-->
+		<div id="calendar" class="calendar-wrap"></div>
 	<script>
-		const weeks = ['日', '月', '火', '水', '木', '金', '土']
-		const date = new Date()
-		let year = date.getFullYear()
-		let month = date.getMonth() + 1
-		const config = {
-		    show: 1, // 出力カレンダー数
-		}
+		const date = new Date();
+		const today = date.getDate();
+		const currentMonth = date.getMonth();
 		
-		function showCalendar(year, month) {
-		    for ( i = 0; i < config.show; i++) {
-		        const calendarHtml = createCalendar(year, month)
-		        const sec = document.createElement('section')
-		        sec.innerHTML = calendarHtml
-		        document.querySelector('#calendar').appendChild(sec)
+		function createCalendar(month) {
+		    const monthDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+		    let calendarHTML = '<table class="calendar"><thead><tr>';
 		
-		        month++
-		        if (month > 12) {
-		            year++
-		            month = 1
+		    for (let i = 0; i < 7; i++) {
+		        if (i === 0) {
+		            calendarHTML += `<th class="sun">${monthDays[i]}</th>`;
+		        } else if (i === 6) {
+		            calendarHTML += `<th class="sat">${monthDays[i]}</th>`;
+		        } else {
+		            calendarHTML += `<th>${monthDays[i]}</th>`;
 		        }
 		    }
-		}
 		
-		function createCalendar(year, month) {
-		    const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
-		    const endDate = new Date(year, month,  0) // 月の最後の日を取得
-		    const endDayCount = endDate.getDate() // 月の末日
-		    const lastMonthEndDate = new Date(year, month - 1, 0) // 前月の最後の日の情報
-		    const lastMonthendDayCount = lastMonthEndDate.getDate() // 前月の末日
-		    const startDay = startDate.getDay() // 月の最初の日の曜日を取得
-		    let dayCount = 1 // 日にちのカウント
-		    let calendarHtml = '' // HTMLを組み立てる変数
+		    calendarHTML += '</tr></thead><tbody>';
 		
-		    calendarHtml += '<h1>' + year  + '/' + month + '</h1>'
-		    calendarHtml += '<table>'
+		    const daysInMonth = new Date(date.getFullYear(), month + 1, 0).getDate();
+		    const firstDay = new Date(date.getFullYear(), month, 1).getDay();
 		
-		    // 曜日の行を作成
-		    for (let i = 0; i < weeks.length; i++) {
-		        calendarHtml += '<td>' + weeks[i] + '</td>'
-		    }
+		    const daysInPrevMonth = new Date(date.getFullYear(), month, 0).getDate();
 		
-		    for (let w = 0; w < 6; w++) {
-		        calendarHtml += '<tr>'
+		    let dayCount = 1;
+		    let prevDayCount = daysInPrevMonth - firstDay + 1;
 		
-		        for (let d = 0; d < 7; d++) {
-		            if (w == 0 && d < startDay) {
-		                // 1行目で1日の曜日の前
-		                let num = lastMonthendDayCount - startDay + d + 1
-		                calendarHtml += '<td class="is-disabled">' + num + '</td>'
-		            } else if (dayCount > endDayCount) {
-		                // 末尾の日数を超えた
-		                let num = dayCount - endDayCount
-		                calendarHtml += '<td class="is-disabled">' + num + '</td>'
-		                dayCount++
+		    for (let i = 0; i < 6; i++) {
+		        calendarHTML += '<tr>';
+		
+		        for (let j = 0; j < 7; j++) {
+		            if (i === 0 && j < firstDay) {
+		                calendarHTML += `<td class="mute">${prevDayCount}</td>`;
+		                prevDayCount++;
+		            } else if (dayCount > daysInMonth) {
+		                let nextMonthDayCount = dayCount - daysInMonth;
+		                calendarHTML += `<td class="mute">${nextMonthDayCount}</td>`;
+		                dayCount++;
 		            } else {
-		                calendarHtml += '<td>' + dayCount + '</td>'
-		                dayCount++
+		                // 今日の日付にclassを付ける
+		                if (dayCount === today && month === currentMonth) {
+		                    calendarHTML += `<td class="today">${dayCount}</td>`;
+		                } 
+		                // 土曜日にclassを付ける
+		                else if (j === 6) {
+		                    calendarHTML += `<td class="sat">${dayCount}</td>`;
+		                }
+		                // 日曜日にclassを付ける
+		                else if (j === 0) {
+		                    calendarHTML += `<td class="sun">${dayCount}</td>`;
+		                } else {
+		                    calendarHTML += `<td>${dayCount}</td>`;
+		                }
+		                dayCount++;
 		            }
 		        }
-		        calendarHtml += '</tr>'
-		    }
-		    calendarHtml += '</table>'
 		
-		    return calendarHtml
-		}
+		        calendarHTML += '</tr>';
 		
-		function moveCalendar(e) {
-		    document.querySelector('#calendar').innerHTML = ''
-		
-		    if (e.target.id === 'prev') {
-		        month--
-		
-		        if (month < 1) {
-		            year--
-		            month = 12
+		        if (dayCount - daysInMonth > 7) {
+		            break;
 		        }
 		    }
 		
-		    if (e.target.id === 'next') {
-		        month++
+		    calendarHTML += '</tbody></table>';
 		
-		        if (month > 12) {
-		            year++
-		            month = 1
-		        }
-		    }
-		
-		    showCalendar(year, month)
+		    return calendarHTML;
 		}
 		
-		document.querySelector('#prev').addEventListener('click', moveCalendar)
-		document.querySelector('#next').addEventListener('click', moveCalendar)
-		
-		showCalendar(year, month)
+		document.getElementById('calendar').innerHTML = createCalendar(currentMonth);
+		//  来月分を表示したい場合は"+ createCalendar(currentMonth + 1)"を後ろに加える
 	</script>
 	
 	<style>
@@ -174,88 +153,12 @@
 	}
 	</style>
 	
-<!--	<div id="calendar" class="calendar-wrap"></div>-->
-<!--	<script>-->
-<!--		const date = new Date();-->
-<!--		const today = date.getDate();-->
-<!--		const currentMonth = date.getMonth();-->
-		
-<!--		function createCalendar(month) {-->
-<!--		    const monthDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];-->
-<!--		    let calendarHTML = '<table class="calendar"><thead><tr>';-->
-		
-<!--		    for (let i = 0; i < 7; i++) {-->
-<!--		        if (i === 0) {-->
-<!--		            calendarHTML += `<th class="sun">${monthDays[i]}</th>`;-->
-<!--		        } else if (i === 6) {-->
-<!--		            calendarHTML += `<th class="sat">${monthDays[i]}</th>`;-->
-<!--		        } else {-->
-<!--		            calendarHTML += `<th>${monthDays[i]}</th>`;-->
-<!--		        }-->
-<!--		    }-->
-		
-<!--		    calendarHTML += '</tr></thead><tbody>';-->
-		
-<!--		    const daysInMonth = new Date(date.getFullYear(), month + 1, 0).getDate();-->
-<!--		    const firstDay = new Date(date.getFullYear(), month, 1).getDay();-->
-		
-<!--		    const daysInPrevMonth = new Date(date.getFullYear(), month, 0).getDate();-->
-		
-<!--		    let dayCount = 1;-->
-<!--		    let prevDayCount = daysInPrevMonth - firstDay + 1;-->
-		
-<!--		    for (let i = 0; i < 6; i++) {-->
-<!--		        calendarHTML += '<tr>';-->
-		
-<!--		        for (let j = 0; j < 7; j++) {-->
-<!--		            if (i === 0 && j < firstDay) {-->
-<!--		                calendarHTML += `<td class="mute">${prevDayCount}</td>`;-->
-<!--		                prevDayCount++;-->
-<!--		            } else if (dayCount > daysInMonth) {-->
-<!--		                let nextMonthDayCount = dayCount - daysInMonth;-->
-<!--		                calendarHTML += `<td class="mute">${nextMonthDayCount}</td>`;-->
-<!--		                dayCount++;-->
-<!--		            } else {-->
-<!--		                // 今日の日付にclassを付ける-->
-<!--		                if (dayCount === today && month === currentMonth) {-->
-<!--		                    calendarHTML += `<td class="today">${dayCount}</td>`;-->
-<!--		                } -->
-<!--		                // 日曜日にclassを付ける-->
-<!--		                else if (j === 0) {-->
-<!--		                    calendarHTML += `<td class="off">${dayCount}</td>`;-->
-<!--		                } -->
-<!--		                else if (j === 6) {-->
-<!--		                    calendarHTML += `<td class="on">${dayCount}</td>`;-->
-<!--		                } -->
-<!--						else {-->
-<!--		                    calendarHTML += `<td>${dayCount}</td>`;-->
-<!--		                }-->
-<!--		                dayCount++;-->
-<!--		            }-->
-<!--		        }-->
-		
-<!--		        calendarHTML += '</tr>';-->
-		
-<!--		        if (dayCount - daysInMonth > 7) {-->
-<!--		            break;-->
-<!--		        }-->
-<!--		    }-->
-		
-<!--		    calendarHTML += '</tbody></table>';-->
-		
-<!--		    return calendarHTML;-->
-<!--		}-->
-		
-<!--		document.getElementById('calendar').innerHTML = createCalendar(currentMonth) + createCalendar(currentMonth + 1);-->
-<!--		//  来月分を表示したい場合は"+ createCalendar(currentMonth + 1)"を後ろに加える-->
-<!--	</script>-->
-	
 	<br>
-		<form action="/tasks/add" method="get">
-			<button type="submit">新規タスク追加</button>
-		</form>
 		<form action="/tasks/edit" method="get">
 			<button type="submit">編集</button>
+		</form>
+		<form action="/tasks/add" method="get">
+			<button type="submit">新規タスク追加</button>
 		</form>
 		<footer th:replace="footer"></footer>
 </div>
