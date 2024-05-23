@@ -74,6 +74,7 @@ public class TaskController {
 	@PostMapping("/tasks/add")
 	public String add(
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
+			@RequestParam(name = "userId", defaultValue = "") Integer userId,
 			@RequestParam(name = "title", defaultValue = "") String title,
 			@RequestParam(name = "closingDate", defaultValue = "") LocalDate closingDate,
 			@RequestParam(name = "progress", defaultValue = "") Integer progress,
@@ -97,7 +98,7 @@ public class TaskController {
 			return "addtasks";
 		}
 
-		Task task = new Task(categoryId, title, closingDate, progress, memo);
+		Task task = new Task(categoryId, userId, title, closingDate, progress, memo);
 		taskRepository.save(task);
 
 		// 「/tasks」にGETでリクエストし直す
@@ -124,7 +125,7 @@ public class TaskController {
 		}
 		model.addAttribute("tasks", taskList);
 
-		// tasks.htmlを出力
+		// tasksDetail.htmlを出力
 		return "tasksDetail";
 	}
 
@@ -138,6 +139,7 @@ public class TaskController {
 		Task task = taskRepository.findById(id).get();
 		model.addAttribute("task", task);
 
+		// editTasks.htmlを出力
 		return "editTasks";
 	}
 
@@ -146,6 +148,7 @@ public class TaskController {
 	public String update(
 			@PathVariable("id") Integer id,
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
+			@RequestParam(name = "userId", defaultValue = "") Integer userId,
 			@RequestParam(name = "title", defaultValue = "") String title,
 			@RequestParam(name = "closingDate", defaultValue = "") LocalDate closingDate,
 			@RequestParam(name = "progress", defaultValue = "") Integer progress,
@@ -170,7 +173,7 @@ public class TaskController {
 		}
 
 		// Taskオブジェクトの生成
-		Task task = new Task(id, categoryId, title, closingDate, progress, memo);
+		Task task = new Task(id, categoryId, userId, title, closingDate, progress, memo);
 		// tasksテーブルへの反映
 		taskRepository.save(task);
 
@@ -186,7 +189,7 @@ public class TaskController {
 		// tasksテーブルから削除（DELETE）
 		taskRepository.deleteById(id);
 		// 「/tasks」にGETでリクエストし直す
-		return "redirect:/tasks";
+		return "redirect:/tasks/edit";
 	}
 
 }

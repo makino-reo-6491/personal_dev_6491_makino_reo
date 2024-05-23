@@ -54,10 +54,10 @@ public class Task implements Serializable {
 		this.memo = memo;
 	}
 
-	public Task(Integer id, Integer categoryId, String title, LocalDate closingDate, Integer progress,
+	public Task(Integer categoryId, Integer userId, String title, LocalDate closingDate, Integer progress,
 			String memo) {
-		this.id = id;
 		this.categoryId = categoryId;
+		this.userId = userId;
 		this.title = title;
 		this.closingDate = closingDate;
 		this.progress = progress;

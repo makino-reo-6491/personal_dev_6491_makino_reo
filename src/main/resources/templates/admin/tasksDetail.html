@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>ToDOリスト</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<meta charset="UTF-8">
+	<title>ToDOリスト</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
-	<body>
-	<header th:replace="admin/header"></header>
-		<hr>
-		
-		<div class="wrapper">
+<body>
+		<header th:replace="admin/header"></header>
+	<hr>
+	
+	<div class="wrapper">
 		<nav>
 	<!--		管理者用の変更忘れずに！-->
 			<a href="/admin/tasks/edit" class="categoriesLink">全タスク</a>
@@ -19,7 +19,8 @@
 			<br>
 		</nav>
 		
-		<table border="1">
+		<h1>《タスク管理画面》</h1>
+	<table border="1">
 			<tr>
 				<th>ID</th>
 				<th>カテゴリーID</th>
@@ -80,7 +81,7 @@
 				</td>
 			</tr>
 		</table>
-		
+		<br>
 <!--		管理者機能に新規追加機能はひつようなのか？-->
 <!--		<form action="/tasks/add" method="get">-->
 <!--			<button type="submit">新規タスクを登録する</button>-->
@@ -88,7 +89,6 @@
 		<form action="/admin/managements" method="get">
 			<button type="submit">管理者画面に戻る</button>
 		</form>
-	</body>
 <script>
 	// 各削除ボタンをクリックしたときにモーダルを表示する
 	document.querySelectorAll('.modalOpen').forEach(function (button) {
@@ -117,4 +117,6 @@
 	});
 </script>
 	<footer th:replace="footer"></footer>
-	</div>
+</div>
+</body>
+</html>

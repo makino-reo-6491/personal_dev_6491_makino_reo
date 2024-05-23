@@ -10,12 +10,14 @@
 	<hr>
 	
 	<div class="wrapper">
-	<h3>新規タスク登録</h3>
+	<h1>《新規タスク登録》</h1>
 		<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
 		
 <!--	カレンダー表示-->
-	<button id="prev" type="button">前の月</button>
-	<button id="next" type="button">次の月</button>
+	<nav>
+		<button id="prev" type="button">前の月</button>
+		<button id="next" type="button">次の月</button>
+	</nav>
 	<div id="calendar"></div>
 	<script>
 		const weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -134,17 +136,58 @@
 				</td>
 			</tr>
 			<tr>
+					<th>タスク実行者</th>
+					<td>
+							<div>
+						      <input type="radio" name="userId" value="1" required/>
+						      <label for="userChoice1">田中</label>
+						
+						      <input type="radio" name="userId" value="2" />
+						      <label for="userChoice2">鈴木</label>
+						
+						      <input type="radio" name="userId" value="3" />
+						      <label for="userChoice3">牧野</label>
+						    </div>
+					</td>
+			</tr>
+			<tr>
 				<th>タイトル</th>
-				<td><input type="text" name="title"></td>
+				<td align="center"><input type="text" name="title"></td>
 			</tr>
 			<tr>
 				<th>期限</th>
 				<td>
 					<label class="date-edit">
-					<input type="date" name="closingDate" required>
+					<input type="date" name="closingDate" id="today" required>
+					<script>
+					    //今日の日時を表示
+					        window.onload = function () {
+					            //今日の日時を表示
+					            var date = new Date()
+					            var year = date.getFullYear()
+					            var month = date.getMonth() + 1
+					            var day = date.getDate()
+					          
+					            var toTwoDigits = function (num, digit) {
+					              num += ''
+					              if (num.length < digit) {
+					                num = '0' + num
+					              }
+					              return num
+					            }
+					            
+					            var yyyy = toTwoDigits(year, 4)
+					            var mm = toTwoDigits(month, 2)
+					            var dd = toTwoDigits(day, 2)
+					            var ymd = yyyy + "-" + mm + "-" + dd;
+					            
+					            document.getElementById("today").value = ymd;
+					        }
+					</script>
 					</label>
 				</td>
 			</tr>
+			
 			<tr>
 				<th>進捗状況</th>
 				<td>
@@ -163,14 +206,19 @@
 			<tr>
 				<th>メモ</th>
 				<td>
-					<textarea name="memo" rows="4" cols="40"></textarea>
+					<textarea name="memo" rows="5"></textarea>
 				</td>
 			</tr>
 		</table>
+		<br>
 		<button type="submit">新規作成</button>
 	</form>
+	<br>
+	<form action="/tasks" method="get">
+			<button type="submit">タスク一覧画面に戻る</button>
+		</form>
+		<br>
 	<footer th:replace="footer"></footer>
 	</div>
-
 </body>
 </html>

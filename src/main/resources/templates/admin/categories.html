@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>カテゴリー一覧</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<meta charset="UTF-8">
+	<title>カテゴリー一覧</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 	<header th:replace="admin/header"></header>
-	<h1>カテゴリー一覧</h1>
+	<hr>
 	
+	<h1>カテゴリー管理画面</h1>
+
+<div class="wrapper">
 	<table border="1">
 		<tr>
 			<th>ID</th>
-			<th>カテゴリー名</th>
+			<th>カテゴリーID</th>
 			<th>更新</th>
 			<th>削除</th>
 		</tr>
@@ -25,44 +28,44 @@
 				</form>
 			</td>
 			<td>
-					<button type="submit" class="modalOpen" th:attr="data-id=${category.id}">削除</button>
-					<div class="modal" th:id="'modal-'+${category.id}">
-						<div class="modal-content">
-							<div class="modal-header">
-								<span class="modalClose">×</span>
-								<h2>確認</h2>
-							</div>
-							<div class="modal-body">
-								<p>本当に削除しますか？</p>
-							</div>
-							<div class="modal-footer" display="inline-block">
-								<form th:action="@{/admin/categories/{id}/delete(id=${category.id})}" method="post">
-									<button>削除</button>
-								</form>
-								<form th:action="@{/admin/categories}" method="get">
-									<button>キャンセル</button>
-								</form>
-							</div>
+				<button type="submit" class="modalOpen" th:attr="data-categoryid=${category.id}">削除</button>
+				<div class="modal" th:id="'modal-'+${category.id}">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modalClose">×</span>
+							<h2>確認</h2>
+						</div>
+						<div class="modal-body">
+							<p>本当に削除しますか？</p>
+						</div>
+						<div class="modal-footer" display="inline-block">
+							<form th:action="@{/admin/categories/{categoryId}/delete(categoryId=${category.id})}" method="post">
+								<button>削除</button>
+							</form>
+							<form th:action="@{/admin/categories}" method="get">
+								<button>キャンセル</button>
+							</form>
 						</div>
 					</div>
-				</td>
+				</div>
+			</td>
 		</tr>
 	</table>
 	<br>
-	<form action="/admin/categories/add" method="get">
-		<button type="submit">カテゴリー新規登録</button>
-	</form>
+		<form action="/admin/categories/add" method="get">
+			<button type="submit">カテゴリー新規登録</button>
+		</form>
+		<br>
+		<form action="/admin/managements" method="get">
+			<button type="submit">管理者画面に戻る</button>
+		</form>
 	<br>
-	<form action="/admin/managements" method="get">
-		<button type="submit">管理者画面へ</button>
-	</form>
-</body>
 <script>
 	// 各削除ボタンをクリックしたときにモーダルを表示する
 	document.querySelectorAll('.modalOpen').forEach(function (button) {
 		button.addEventListener('click', function () {
-			var taskId = button.getAttribute('data-taskid');
-			var modal = document.getElementById('modal-' + taskId);
+			var categoryId = button.getAttribute('data-categoryid');
+			var modal = document.getElementById('modal-' + categoryId);
 			modal.style.display = 'block';
 		});
 	});
@@ -84,5 +87,8 @@
 		});
 	});
 </script>
-	<footer th:replace="footer"></footer>
+	<footer th:replace="footer"></footer>	
+	</div>
+
+</body>
 </html>

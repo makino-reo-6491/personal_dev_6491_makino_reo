@@ -11,18 +11,20 @@
 	
 	<div class="wrapper">
 	<nav>
-		<form action="/tasks" method="get">
-		タスク名<input type="text" name="keyword" th:value="${keyword}" placeholder="タスク名">
+		<form action="/tasks" method="get">タスク名<input type="text" name="keyword" th:value="${keyword}" placeholder="タスク名">
 		<button>検索</button>
-	</form>
+		</form>
 		<a href="/tasks" class="categoriesLink">全タスク</a>
 		<a th:each="c:${categories}" th:href="@{/tasks(categoryId=${c.id})}">
 			<span class="categoriesLink" text-align="left" th:text="${c.name}" style="padding-left: 10px;"></span>
 		</a>
-		<a href="tasks?sort=ASC">締め切り順</a>
+		<br>
+		<span class="categoriesLink"><a href="tasks?sort=ASC">締め切り順</a></span>
 		<br>
 	</nav>
 
+	<br>
+	<h1>《タスク一覧》</h1>
 	<br>
 		<table border="1">
 		<tr>
@@ -45,7 +47,6 @@
 				<span th:if="${task.userId}==1">田中</span>
 				<span th:if="${task.userId}==2">鈴木</span>
 				<span th:if="${task.userId}==3">牧野</span>
-<!--				<span th:if="${task.userId}==${task.userId}"><span th:text="${users.name}"></span>-->
 			</td>
 			<td th:text="${task.title}"></td>
 			<td th:text="${task.closingDate}"></td>
@@ -57,6 +58,7 @@
 			<td th:text="${task.memo}"></td>
 		</tr>
 	</table>
+	<br>
 	
 <!--カレンダー表示-->
 		<div id="calendar" class="calendar-wrap"></div>
@@ -135,44 +137,14 @@
 		//  来月分を表示したい場合は"+ createCalendar(currentMonth + 1)"を後ろに加える
 	</script>
 	
-	<style>
-		h1 {
-    font-size: 18px;
-	}
-	
-	table {
-	    border-spacing: 0;
-	    border-collapse: collapse;
-	}
-	
-	td {
-	    border: 1px solid #ddd;
-	    padding: 5px;
-	    text-align: center;
-	}
-	/*
-	td:first-child {
-	    color: red;
-	}
-	
-	td:last-child {
-	    color: royalblue;
-	}
-	*/
-	td.is-disabled {
-    color: #ccc;
-	}
-	</style>
-	
 	<br>
-		<form action="/tasks/edit" method="get">
-			<button type="submit">編集</button>
-		</form>
 		<form action="/tasks/add" method="get">
 			<button type="submit">新規タスク追加</button>
 		</form>
+		<form action="/tasks/edit" method="get">
+			<button type="submit">編集</button>
+		</form>
 		<footer th:replace="footer"></footer>
 </div>
-
 </body>
 </html>

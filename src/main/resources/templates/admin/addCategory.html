@@ -9,6 +9,7 @@
 	<header th:replace="admin/header"></header>
 	<h1>カテゴリー登録</h1>
 
+	<div class="wrapper">
 	<form action="/admin/categories/add" method="post">
 		<table border="1">
 			<tr>
@@ -20,5 +21,9 @@
 		</table>
 			<button type="submit">更新</button>
 	</form>
+	
+	<footer th:replace="footer"></footer>	
+	</div>
+
 </body>
 </html>
