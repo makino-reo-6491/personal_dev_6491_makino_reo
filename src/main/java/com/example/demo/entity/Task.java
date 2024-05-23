@@ -36,7 +36,7 @@ public class Task implements Serializable {
 
 	private String memo;
 
-	@ManyToOne // itemは多、結合するcategoryは1
+	@ManyToOne // taskは多、結合するcategoryは1
 	@JoinColumn(name = "category_id", insertable = false, updatable = false) // 結合に使いたい列名＝外部キーの列名を書く、テーブルに操作を行うときにこのテーブルは関係ありません
 	private Category category; // 結合したいテーブルのインスタンスを生成
 
@@ -58,6 +58,17 @@ public class Task implements Serializable {
 			String memo) {
 		this.id = id;
 		this.categoryId = categoryId;
+		this.title = title;
+		this.closingDate = closingDate;
+		this.progress = progress;
+		this.memo = memo;
+	}
+
+	public Task(Integer id, Integer categoryId, Integer userId, String title, LocalDate closingDate, Integer progress,
+			String memo) {
+		this.id = id;
+		this.categoryId = categoryId;
+		this.userId = userId;
 		this.title = title;
 		this.closingDate = closingDate;
 		this.progress = progress;

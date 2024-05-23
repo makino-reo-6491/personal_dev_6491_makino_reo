@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク更新</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<header th:replace="admin/header"></header>
+	<hr>
+	
+	<div class="wrapper">
+		<h2>タスク更新</h2>
+			<form th:action="'/admin/tasks/'+${task.id}+'/edit'" method="post">
+				<table border="1">
+					<tr>
+						<th>カテゴリー</th>
+						<td>
+							<div>
+						      <input type="radio" name="categoryId" value="1" required/>
+						      <label for="categoryChoice1">仕事</label>
+						
+						      <input type="radio" name="categoryId" value="2" />
+						      <label for="categoryChoice2">個人</label>
+						
+						      <input type="radio" name="categoryId" value="3" />
+						      <label for="categoryChoice3">その他</label>
+						    </div>
+						</td>
+					</tr>
+					<tr>
+						<th>タイトル</th>
+						<td>
+							<input type="text" name="title" th:value="${task.title}" required>
+						</td>
+					</tr>
+					<tr>
+						<th>期限</th>
+						<td>
+							<label class="date-edit">
+							<input type="date" name="closingDate" required>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<th>進捗状況</th>
+						<td>
+							<div>
+						      <input type="radio" name="progress" value="0" required/>
+						      <label for="progressChoice1">未着手</label>
+						
+						      <input type="radio" name="progress" value="1" />
+						      <label for="progressChoice2">進行中</label>
+						
+						      <input type="radio" name="progress" value="2" />
+						      <label for="progressChoice3">完了</label>
+						    </div>
+						</td>
+					</tr>
+					<tr>
+						<th>メモ</th>
+						<td>
+							<textarea name="memo" th:value="${task.memo}" rows="4" cols="40" required></textarea>
+						</td>
+					</tr>
+				</table>
+<!--				<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>-->
+				
+				<button type="submit">更新</button>
+			</form>
+		<footer th:replace="footer"></footer>
+	</div>
+
+</body>
+</html>

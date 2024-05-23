@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="encording">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>タスク一覧</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-
+	<header th:replace="admin/header"></header>
+	<br>
+	<form action="/admin/tasks/edit" method="get">
+		<button type="submit">タスク管理画面へ</button>
+	</form>
+	<br>
+	<form action="/admin/categories" method="get">
+		<button type="submit">カテゴリー管理画面へ</button>
+	</form>
+	<br>
+	<form action="/admin/users" method="get">
+		<button type="submit">ユーザー管理へ</button>
+	</form>
 </body>
+		<script>
+			// 各削除ボタンをクリックしたときにモーダルを表示する
+			document.querySelectorAll('.modalOpen').forEach(function (button) {
+				button.addEventListener('click', function () {
+					var taskId = button.getAttribute('data-taskid');
+					var modal = document.getElementById('modal-' + taskId);
+					modal.style.display = 'block';
+				});
+			});
+		
+			// モーダルの閉じるボタンをクリックしたときにモーダルを閉じる
+			document.querySelectorAll('.modalClose').forEach(function (closeButton) {
+				closeButton.addEventListener('click', function () {
+					var modal = closeButton.closest('.modal');
+					modal.style.display = 'none';
+				});
+			});
+		
+			// モーダルの外側をクリックしたときにモーダルを閉じる
+			window.addEventListener('click', function (event) {
+				document.querySelectorAll('.modal').forEach(function (modal) {
+					if (event.target === modal) {
+						modal.style.display = 'none';
+					}
+				});
+			});
+		</script>
+	<footer th:replace="footer"></footer>
 </html>

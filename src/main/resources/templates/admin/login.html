@@ -8,32 +8,25 @@
 <body>
 	<header>
 		<h1 text align="left">ToDoリスト</h1>
-		<p text align="right"><a href="/admin/login" text-align="">管理者ログイン</a></p>
 	</header>
 	<hr>
-		
 	
 	<div class="wrapper">
 		<div class="container">
-		<h2 class="fsize">ログイン</h2>
-		<form action="/login" method="post">
+		<h2 class="fsize">管理者ログイン</h2>
+		<form action="/admin/login" method="post">
 			<input type="email" name="email" placeholder="メールアドレス">
 			<br>
 			<input type="password" name="password" placeholder="パスワード">
 			<br>
-				<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
 				<span th:text="${message}" style="color:red;"></span>
 			<br>
 			<br>
 			<button type="submit">ログイン</button>
 		</form>	
-		<form action="/users/new" method="get">
-			<button type="submit">ユーザー新規登録</button>
-		</form>
 		</div>
 	
 	<footer th:replace="footer"></footer>	
 	</div>
-
 </body>
 </html>

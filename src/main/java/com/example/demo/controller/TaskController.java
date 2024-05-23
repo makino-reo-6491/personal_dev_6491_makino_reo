@@ -30,29 +30,33 @@ public class TaskController {
 	@GetMapping("/tasks")
 	public String index(
 			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
+			@RequestParam(value = "keyword", defaultValue = "") String keyword,
 			@RequestParam(value = "sort", defaultValue = "") String sort,
 			Model model) {
 
-		List<Task> taskList = taskRepository.findAll();
-		model.addAttribute("tasks", taskList);
+		//		List<Task> taskList = taskRepository.findAll();
+		//		model.addAttribute("tasks", taskList);
 
 		// 全カテゴリー一覧を取得
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
 		// タスク一覧情報の取得
-		List<Task> TaskList = null;
-		if (categoryId != null) {
-			TaskList = taskRepository.findByCategoryId(categoryId);
+		List<Task> taskList = null;
+		// 商品名による部分一致検索 
+		if (keyword.length() > 0) {
+			taskList = taskRepository.findByTitleContaining(keyword);
+		} else if (categoryId != null) {
+			taskList = taskRepository.findByCategoryId(categoryId);
 		} else if (sort.equals("ASC")) {
-			TaskList = taskRepository.findByOrderByClosingDateAsc();
+			taskList = taskRepository.findByOrderByClosingDateAsc();
 		} else {
-			TaskList = taskRepository.findAll();
-			// tasksテーブルをカテゴリーIDを指定して一覧を取得
-
-			//			taskList = taskRepository.findByOrderByClosingDateAsc(closingDate);
+			taskList = taskRepository.findAll();
 		}
-		model.addAttribute("tasks", TaskList);
+
+		model.addAttribute("keyword", keyword);
+
+		model.addAttribute("tasks", taskList);
 
 		// tasks.htmlを出力
 		return "tasks";
@@ -147,6 +151,23 @@ public class TaskController {
 			@RequestParam(name = "progress", defaultValue = "") Integer progress,
 			@RequestParam(name = "memo", defaultValue = "") String memo,
 			Model model) {
+
+		// エラーチェック
+		List<String> errorList = new ArrayList<>();
+		if (title.length() == 0) {
+			errorList.add("タスク名は必須です");
+		}
+		if (memo.length() == 0) {
+			errorList.add("内容を入力してください");
+		}
+
+		// エラー発生時は新規登録フォームに戻す
+		if (errorList.size() > 0) {
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("title", title);
+			model.addAttribute("memo", memo);
+			return "editTasks";
+		}
 
 		// Taskオブジェクトの生成
 		Task task = new Task(id, categoryId, title, closingDate, progress, memo);

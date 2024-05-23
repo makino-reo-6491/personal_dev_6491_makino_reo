@@ -6,9 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<header>
-		<h1 text align="left">ToDoリスト</h1>
-	</header>
+		<header th:replace="admin/header"></header>
 	<hr>
 
 	<br>
@@ -23,7 +21,7 @@
 			<td th:text="${user.id}"></td>
 			<td th:text="${user.name}"></td>
 			<td>
-				<form th:action="@{/users/{id}/edit(id=${user.id})}" method="get">
+				<form th:action="@{/admin/users/{id}/edit(id=${user.id})}" method="get">
 					<button type="submit">更新</button>
 				</form>
 			</td>
@@ -39,10 +37,10 @@
 							<p>本当に削除しますか？</p>
 						</div>
 						<div class="modal-footer" display="inline-block">
-							<form th:action="@{/users/{userId}/delete(userId=${user.id})}" method="post">
+							<form th:action="@{/admin/users/{userId}/delete(userId=${user.id})}" method="post">
 								<button>削除</button>
 							</form>
-							<form th:action="@{/users}" method="get">
+							<form th:action="@{/admin/users}" method="get">
 								<button>キャンセル</button>
 							</form>
 						</div>
@@ -53,8 +51,8 @@
 		</tr>
 	</table>
 	<br>
-	<form action="/login" method="get">
-		<button type="submit">ログイン画面に戻る</button>
+	<form action="/admin/managements" method="get">
+		<button type="submit">管理者画面に戻る</button>
 	</form>
 	
 	

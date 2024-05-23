@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>カテゴリー一覧</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<header th:replace="admin/header"></header>
+	<h1>カテゴリー一覧</h1>
+	
+	<table border="1">
+		<tr>
+			<th>ID</th>
+			<th>カテゴリー名</th>
+			<th>更新</th>
+			<th>削除</th>
+		</tr>
+		<tr th:each="category:${categories}">
+			<td th:text="${category.id}"></td>
+			<td th:text="${category.name}"></td>
+			<td>
+				<form th:action="'/admin/categories/'+${category.id}+'/edit'" method="get">
+					<button type="submit">更新</button>
+				</form>
+			</td>
+			<td>
+					<button type="submit" class="modalOpen" th:attr="data-id=${category.id}">削除</button>
+					<div class="modal" th:id="'modal-'+${category.id}">
+						<div class="modal-content">
+							<div class="modal-header">
+								<span class="modalClose">×</span>
+								<h2>確認</h2>
+							</div>
+							<div class="modal-body">
+								<p>本当に削除しますか？</p>
+							</div>
+							<div class="modal-footer" display="inline-block">
+								<form th:action="@{/admin/categories/{id}/delete(id=${category.id})}" method="post">
+									<button>削除</button>
+								</form>
+								<form th:action="@{/admin/categories}" method="get">
+									<button>キャンセル</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</td>
+		</tr>
+	</table>
+	<br>
+	<form action="/admin/categories/add" method="get">
+		<button type="submit">カテゴリー新規登録</button>
+	</form>
+	<br>
+	<form action="/admin/managements" method="get">
+		<button type="submit">管理者画面へ</button>
+	</form>
+</body>
+<script>
+	// 各削除ボタンをクリックしたときにモーダルを表示する
+	document.querySelectorAll('.modalOpen').forEach(function (button) {
+		button.addEventListener('click', function () {
+			var taskId = button.getAttribute('data-taskid');
+			var modal = document.getElementById('modal-' + taskId);
+			modal.style.display = 'block';
+		});
+	});
+
+	// モーダルの閉じるボタンをクリックしたときにモーダルを閉じる
+	document.querySelectorAll('.modalClose').forEach(function (closeButton) {
+		closeButton.addEventListener('click', function () {
+			var modal = closeButton.closest('.modal');
+			modal.style.display = 'none';
+		});
+	});
+
+	// モーダルの外側をクリックしたときにモーダルを閉じる
+	window.addEventListener('click', function (event) {
+		document.querySelectorAll('.modal').forEach(function (modal) {
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
+		});
+	});
+</script>
+	<footer th:replace="footer"></footer>
+</html>

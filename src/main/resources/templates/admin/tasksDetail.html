@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ToDOリスト</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+	<body>
+	<header th:replace="admin/header"></header>
+		<hr>
+		
+		<div class="wrapper">
+		<nav>
+	<!--		管理者用の変更忘れずに！-->
+			<a href="/admin/tasks/edit" class="categoriesLink">全タスク</a>
+			<a th:each="category:${categories}" th:href="'/admin/tasks/edit?categoryId='+${category.id}">
+				<span class="categoriesLink" th:text="${category.name}" style="padding-left: 10px;"></span>
+			</a>
+			<br>
+		</nav>
+		
+		<table border="1">
+			<tr>
+				<th>ID</th>
+				<th>カテゴリーID</th>
+				<th>タスク実行者</th>
+				<th>タイトル</th>
+				<th>期限</th>
+				<th>進捗状況</th>
+				<th>メモ</th>
+				<th>更新</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="task:${tasks}">
+				<td th:text="${task.id}"></td>
+				<td>
+					<span th:if="${task.categoryId}==1">仕事</span>
+					<span th:if="${task.categoryId}==2">個人</span>
+					<span th:if="${task.categoryId}==3">その他</span>
+				</td>
+				<td>
+					<span th:if="${task.userId}==1">田中</span>
+					<span th:if="${task.userId}==2">鈴木</span>
+					<span th:if="${task.userId}==3">牧野</span>
+				</td>
+				<td th:text="${task.title}"></td>
+				<td th:text="${task.closingDate}"></td>
+				<td>
+					<span th:if="${task.progress}==0">未着手</span>
+					<span th:if="${task.progress}==1">進行中</span>
+					<span th:if="${task.progress}==2">完了</span>
+				</td>
+				<td th:text="${task.memo}"></td>
+				<td>
+					<form th:action="@{/admin/tasks/{id}/edit(id=${task.id})}" method="get">
+						<button type="submit">更新</button>
+					</form>
+				</td>
+				<td>
+					<button type="submit" class="modalOpen" th:attr="data-taskid=${task.id}">削除</button>
+					<div class="modal" th:id="'modal-'+${task.id}">
+						<div class="modal-content">
+							<div class="modal-header">
+								<span class="modalClose">×</span>
+								<h2>確認</h2>
+							</div>
+							<div class="modal-body">
+								<p>本当に削除しますか？</p>
+							</div>
+							<div class="modal-footer" display="inline-block">
+								<form th:action="@{/admin/tasks/{taskId}/delete(taskId=${task.id})}" method="post">
+									<button>削除</button>
+								</form>
+								<form th:action="@{/admin/tasks}" method="get">
+									<button>キャンセル</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+<!--		管理者機能に新規追加機能はひつようなのか？-->
+<!--		<form action="/tasks/add" method="get">-->
+<!--			<button type="submit">新規タスクを登録する</button>-->
+<!--		</form>-->
+		<form action="/admin/managements" method="get">
+			<button type="submit">管理者画面に戻る</button>
+		</form>
+	</body>
+<script>
+	// 各削除ボタンをクリックしたときにモーダルを表示する
+	document.querySelectorAll('.modalOpen').forEach(function (button) {
+		button.addEventListener('click', function () {
+			var taskId = button.getAttribute('data-taskid');
+			var modal = document.getElementById('modal-' + taskId);
+			modal.style.display = 'block';
+		});
+	});
+
+	// モーダルの閉じるボタンをクリックしたときにモーダルを閉じる
+	document.querySelectorAll('.modalClose').forEach(function (closeButton) {
+		closeButton.addEventListener('click', function () {
+			var modal = closeButton.closest('.modal');
+			modal.style.display = 'none';
+		});
+	});
+
+	// モーダルの外側をクリックしたときにモーダルを閉じる
+	window.addEventListener('click', function (event) {
+		document.querySelectorAll('.modal').forEach(function (modal) {
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
+		});
+	});
+</script>
+	<footer th:replace="footer"></footer>
+	</div>

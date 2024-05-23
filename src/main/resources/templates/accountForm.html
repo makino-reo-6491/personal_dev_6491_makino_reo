@@ -25,7 +25,6 @@
 					<br>
 			 <input type="password" name="password2" placeholder="パスワード（確認用）">
 					<br>
-			
 			<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
 								
 			<button type="submit">新規作成</button>

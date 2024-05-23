@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ToDoリスト</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<header th:replace="admin/header"></header>
+	<hr>
+	
+	<div class="wrapper">
+	<h3>新規タスク登録</h3>
+		<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
+		
+	<form action="/admin/tasks/add" method="post">
+		<table border="1">
+			<tr>
+				<th>カテゴリー</th>
+				<td>
+					<div>
+				      <input type="radio" name="categoryId" value="1" required />
+				      <label for="categoryChoice1">仕事</label>
+				
+				      <input type="radio" name="categoryId" value="2" />
+				      <label for="categoryChoice2">個人</label>
+				
+				      <input type="radio" name="categoryId" value="3" />
+				      <label for="categoryChoice3">その他</label>
+				    </div>
+				</td>
+			</tr>
+			<tr>
+				<th>タイトル</th>
+				<td><input type="text" name="title"></td>
+			</tr>
+			<tr>
+				<th>期限</th>
+				<td>
+					<label class="date-edit">
+					<input type="date" name="closingDate" required>
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<th>進捗状況</th>
+				<td>
+					<div>
+				      <input type="radio" name="progress" value="0" required />
+				      <label for="progressChoice1">未着手</label>
+				
+				      <input type="radio" name="progress" value="1" />
+				      <label for="progressChoice2">進行中</label>
+				
+				      <input type="radio" name="progress" value="2" />
+				      <label for="progressChoice3">完了</label>
+				    </div>
+				</td>
+			</tr>
+			<tr>
+				<th>メモ</th>
+				<td>
+					<textarea name="memo" rows="4" cols="40"></textarea>
+				</td>
+			</tr>
+		</table>
+		<button type="submit">新規作成</button>
+	</form>
+	<footer th:replace="footer"></footer>
+	</div>
+
+</body>
+</html>
