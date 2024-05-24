@@ -10,7 +10,7 @@
 	<hr>
 	
 	<div class="wrapper">
-		<h2>タスク更新</h2>
+		<h2>《タスク更新》</h2>
 			<form th:action="'/admin/tasks/'+${task.id}+'/edit'" method="post">
 				<table border="1">
 					<tr>
@@ -31,16 +31,25 @@
 					<tr>
 					<th>タスク実行者</th>
 					<td>
-							<div>
-						      <input type="radio" name="userId" value="1" th:checked="${task.userId == 1}"required/>
-						      <label for="userChoice1">田中</label>
-						
-						      <input type="radio" name="userId" value="2" th:checked="${task.userId == 2}"/>
-						      <label for="userChoice2">鈴木</label>
-						
-						      <input type="radio" name="userId" value="3" th:checked="${task.userId == 3}"/>
-						      <label for="userChoice3">牧野</label>
-						    </div>
+						<div>
+					      <input type="radio" name="userId" value="1" th:checked="${task.userId == 1}" required />
+					      <label for="userChoice1">石田</label>
+					
+					      <input type="radio" name="userId" value="2" th:checked="${task.userId == 2}" />
+					      <label for="userChoice2">小林</label>
+					
+					      <input type="radio" name="userId" value="3" th:checked="${task.userId == 3}" />
+					      <label for="userChoice3">中留</label>
+					
+					      <input type="radio" name="userId" value="4" th:checked="${task.userId == 4}" />
+					      <label for="userChoice4">三井</label>
+					
+					      <input type="radio" name="userId" value="5" th:checked="${task.userId == 5}" />
+					      <label for="userChoice5">伊賀</label>
+					
+					      <input type="radio" name="userId" value="6" th:checked="${task.userId == 6}" />
+					      <label for="userChoice6">牧野</label>
+					    </div>
 					</td>
 					</tr>
 					<tr>

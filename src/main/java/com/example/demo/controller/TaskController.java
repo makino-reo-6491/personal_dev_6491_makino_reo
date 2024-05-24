@@ -178,7 +178,7 @@ public class TaskController {
 		taskRepository.save(task);
 
 		// 「/tasks」にリダイレクトし直す
-		return "redirect:/tasks";
+		return "redirect:/tasks/edit";
 	}
 
 	// 削除処理

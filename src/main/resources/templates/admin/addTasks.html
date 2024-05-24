@@ -10,7 +10,7 @@
 	<hr>
 	
 	<div class="wrapper">
-	<h3>新規タスク登録</h3>
+	<h2>《新規タスク登録》</h2>
 		<ul th:if="${errorList}" class="error" th:each="error:${errorList}" th:text="${error}" style="color:red;"></ul>
 		
 	<form action="/admin/tasks/add" method="post">
@@ -27,6 +27,30 @@
 				
 				      <input type="radio" name="categoryId" value="3" />
 				      <label for="categoryChoice3">その他</label>
+				    </div>
+				</td>
+			</tr>
+			<tr>
+				<th>タスク実行者</th>
+				<td>
+					<div>
+				      <input type="radio" name="userId" value="1" required />
+				      <label for="userChoice1">石田</label>
+				
+				      <input type="radio" name="userId" value="2" />
+				      <label for="userChoice2">小林</label>
+				
+				      <input type="radio" name="userId" value="3" />
+				      <label for="userChoice3">中留</label>
+				
+				      <input type="radio" name="userId" value="4" />
+				      <label for="userChoice4">三井</label>
+				
+				      <input type="radio" name="userId" value="5" />
+				      <label for="userChoice5">伊賀</label>
+				
+				      <input type="radio" name="userId" value="6" />
+				      <label for="userChoice6">牧野</label>
 				    </div>
 				</td>
 			</tr>

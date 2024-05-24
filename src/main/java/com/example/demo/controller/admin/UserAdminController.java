@@ -67,6 +67,62 @@ public class UserAdminController {
 		return "admin/users";
 	}
 
+	// 新規ユーザー追加画面表示
+	@GetMapping("/users/new")
+	public String create() {
+		return "admin/accountForm";
+	}
+
+	// 新規ユーザー追加実行
+	@PostMapping("/users/add")
+	public String add(
+			@RequestParam("name") String name,
+			@RequestParam("email") String email,
+			@RequestParam("password") String password,
+			@RequestParam("password2") String password2,
+			Model model) {
+
+		// エラーチェック
+		List<String> errorList = new ArrayList<>();
+		if (name.length() == 0) {
+			errorList.add("名前は必須です");
+		}
+		if (email.length() == 0) {
+			errorList.add("メールアドレスは必須です");
+		}
+		if (password.length() == 0) {
+			errorList.add("パスワードは必須です");
+		}
+		if (password2.equals(password) == false) {
+			errorList.add("パスワードが一致しません");
+		}
+		// メールアドレス存在チェック
+		List<User> userList = userRepository.findByEmailAndPassword(email, password);
+		if (userList != null && userList.size() > 0) {
+			// 登録済みのメールアドレスが存在した場合
+			errorList.add("登録済みのメールアドレスです");
+		}
+		if (userList == null || userList.size() == 0) {
+			// 存在しなかった場合
+			model.addAttribute("message", "メールアドレスとパスワードが一致しませんでした");
+		}
+
+		// エラー発生時は新規登録フォームに戻す
+		if (errorList.size() > 0) {
+			model.addAttribute("errorList", errorList);
+			model.addAttribute("name", name);
+			model.addAttribute("email", email);
+			model.addAttribute("password", password);
+			model.addAttribute("password2", password2);
+			return "admin/accountForm";
+		}
+
+		User user = new User(email, name, password);
+		userRepository.save(user);
+
+		return "redirect:/admin/users";
+	}
+
 	// 更新画面表示
 	@GetMapping("/users/{id}/edit")
 	public String edit(

@@ -12,7 +12,7 @@
 	<hr>
 	
 	<div class="wrapper">
-		<h2>ユーザー情報更新</h2>
+		<h2>《ユーザー情報更新》</h2>
 			<form th:action="@{/admin/users/{id}/edit(id=${user.id})}" method="post">
 				<input type="text" name="name" placeholder="名前" th:value="${user.name}">
 						<br>
