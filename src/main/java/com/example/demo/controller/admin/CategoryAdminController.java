@@ -43,7 +43,7 @@ public class CategoryAdminController {
 
 	// 新規登録処理
 	@PostMapping("/add")
-	public String store(
+	public String add(
 			@RequestParam(value = "name", defaultValue = "") String name,
 			Model model) {
 

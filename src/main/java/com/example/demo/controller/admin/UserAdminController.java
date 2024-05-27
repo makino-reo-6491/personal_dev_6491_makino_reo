@@ -31,7 +31,7 @@ public class UserAdminController {
 	@Autowired
 	Account account;
 
-	// 管理者ログイン画面初期表示
+	// 管理者ログイン画面表示
 	@GetMapping("/login")
 	public String index() {
 

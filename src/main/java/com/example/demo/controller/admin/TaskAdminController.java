@@ -28,7 +28,7 @@ public class TaskAdminController {
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	// 商品一覧表示
+	// タスク一覧表示
 	@GetMapping("/managements")
 	public String index(
 			@RequestParam(value = "categoryId", defaultValue = "") Integer categoryId,
@@ -90,6 +90,7 @@ public class TaskAdminController {
 	@PostMapping("/tasks/add")
 	public String add(
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
+			@RequestParam(name = "userId", defaultValue = "") Integer userId,
 			@RequestParam(name = "title", defaultValue = "") String title,
 			@RequestParam(name = "closingDate", defaultValue = "") LocalDate closingDate,
 			@RequestParam(name = "progress", defaultValue = "") Integer progress,
@@ -141,6 +142,7 @@ public class TaskAdminController {
 	public String update(
 			@PathVariable("id") Integer id,
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
+			@RequestParam(name = "userId", defaultValue = "") Integer userId,
 			@RequestParam(name = "title", defaultValue = "") String title,
 			@RequestParam(name = "closingDate", defaultValue = "") LocalDate closingDate,
 			@RequestParam(name = "progress", defaultValue = "") Integer progress,
